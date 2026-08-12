@@ -348,7 +348,10 @@
         <!-- 2. SIGN IN VIEW -->
         <section id="signinView" class="view">
             <div class="form-container">
-                <h2>Sign In</h2>
+                <h2>Sign In Required</h2>
+                <p style="color: var(--text-secondary); text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                    You must sign in with your phone number before you can buy or sell artwork.
+                </p>
                 <form onsubmit="handleSignIn(event)">
                     <div class="form-group">
                         <label for="phone">Phone Number (Required)</label>
@@ -358,7 +361,7 @@
                         <label for="email">Email Address (Optional)</label>
                         <input type="email" id="email" placeholder="name@example.com">
                     </div>
-                    <button type="submit" class="submit-btn">Continue</button>
+                    <button type="submit" class="submit-btn">Sign In to Continue</button>
                 </form>
             </div>
         </section>
@@ -443,11 +446,14 @@
 
     <script>
         let currentUser = null;
+        let pendingViewAfterSignIn = null;
         let drawings = [];
 
         function switchView(view) {
-            if (view === 'sell' && !currentUser) {
-                alert("Please sign in with your phone number to sell art.");
+            // ENFORCE SIGN-IN FOR BOTH BUY AND SELL
+            if ((view === 'buy' || view === 'sell') && !currentUser) {
+                alert(`Please sign in with your phone number first to ${view} art.`);
+                pendingViewAfterSignIn = view;
                 switchView('signin');
                 return;
             }
@@ -464,8 +470,17 @@
             currentUser = { phone };
             document.getElementById('authBtn').innerText = `Phone: ${phone.slice(-4)}`;
             document.getElementById('sellerPhone').value = phone;
-            alert('Signed in!');
-            switchView('home');
+            
+            alert('Signed in successfully!');
+            
+            // Redirect to the section they originally tried to open
+            if (pendingViewAfterSignIn) {
+                const target = pendingViewAfterSignIn;
+                pendingViewAfterSignIn = null;
+                switchView(target);
+            } else {
+                switchView('home');
+            }
         }
 
         function handleSellSubmit(e) {
