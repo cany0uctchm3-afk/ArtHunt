@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtHunt | Buy & Sell Original Art</title>
     <style>
-        /* --- PURE BLACK THEME & STYLES --- */
         :root {
             --bg-main: #000000;
             --bg-card: #0a0a0a;
@@ -34,7 +33,6 @@
             flex-direction: column;
         }
 
-        /* --- HEADER & NAVIGATION --- */
         header {
             background-color: #050505;
             border-bottom: 1px solid var(--border);
@@ -79,7 +77,6 @@
             color: var(--accent);
         }
 
-        /* --- MAIN CONTAINER --- */
         main {
             flex: 1;
             max-width: 1100px;
@@ -94,14 +91,13 @@
         .view { display: none; }
         .view.active { display: block; }
 
-        /* --- BIG CENTERED HERO OPTIONS (HOME) --- */
         .centered-home {
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 65vh;
+            min-height: 60vh;
         }
 
         .hero-title {
@@ -119,7 +115,7 @@
 
         .big-options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
             width: 100%;
             max-width: 850px;
@@ -162,7 +158,6 @@
             line-height: 1.5;
         }
 
-        /* --- FORMS --- */
         .form-container {
             max-width: 500px;
             margin: 2rem auto;
@@ -220,7 +215,6 @@
 
         .submit-btn:hover { background: var(--accent-hover); }
 
-        /* --- GALLERY --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -247,7 +241,6 @@
         .art-artist { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.8rem; }
         .art-price { font-size: 1.4rem; font-weight: 800; color: var(--success); margin-bottom: 1rem; }
 
-        /* --- MODAL (CHECKOUT & VERIFICATION) --- */
         .modal {
             display: none;
             position: fixed;
@@ -305,7 +298,6 @@
             color: var(--warning);
         }
 
-        /* --- FOOTER --- */
         footer {
             background: #050505;
             border-top: 1px solid var(--border);
@@ -321,7 +313,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="logo" onclick="switchView('home')">ART<span>HUNT</span></div>
         <nav>
@@ -331,10 +322,8 @@
         </nav>
     </header>
 
-    <!-- MAIN BODY -->
     <main>
-        
-        <!-- 1. HOME VIEW (BIG & CENTERED OPTIONS) -->
+        <!-- 1. HOME VIEW -->
         <section id="homeView" class="view active">
             <div class="centered-home">
                 <h1 class="hero-title">ARTHUNT</h1>
@@ -410,10 +399,9 @@
                 </form>
             </div>
         </section>
-
     </main>
 
-    <!-- CHECKOUT MODAL (MANUAL CONFIRMATION MODE) -->
+    <!-- CHECKOUT MODAL -->
     <div class="modal" id="paymentModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">&times;</button>
@@ -449,15 +437,13 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer>
         Contact Us: <span>6360453498</span> | ArtHunt © 2026
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         let currentUser = null;
-        let drawings = []; // Empty array ready for real seller uploads
+        let drawings = [];
 
         function switchView(view) {
             if (view === 'sell' && !currentUser) {
