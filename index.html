@@ -1,545 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ArtHunt | Buy & Sell Original Art</title>
-  <style>
-    :root {
-      --bg-main: #0f1117;
-      --bg-card: #1a1d26;
-      --bg-input: #12141c;
-      --accent: #f59e0b;
-      --accent-hover: #d97706;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --border: #2e3444;
-      --success: #10b981;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtHunt | Buy & Sell Original Art</title>
+    <style>
+        /* --- PURE BLACK THEME & STYLES --- */
+        :root {
+            --bg-main: #000000;
+            --bg-card: #0a0a0a;
+            --bg-input: #141414;
+            --accent: #ff4757;
+            --accent-hover: #ff6b81;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --border: #222222;
+            --success: #2ed573;
+            --warning: #ffa500;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
 
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    header {
-      background-color: #161922;
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: #050505;
+            border-bottom: 1px solid var(--border);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 1px;
-    }
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            cursor: pointer;
+        }
 
-    nav button {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 0.5rem;
-      transition: all 0.2s;
-    }
+        .logo span { color: var(--accent); }
 
-    nav button:hover, nav button.active {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-      font-weight: 600;
-    }
+        nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
 
-    .container {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      flex: 1;
-      width: 100%;
-    }
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
 
-    .view {
-      display: none;
-    }
+        .nav-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
 
-    .view.active {
-      display: block;
-    }
+        /* --- MAIN CONTAINER --- */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
+        .view { display: none; }
+        .view.active { display: block; }
 
-    h2 {
-      margin-bottom: 1rem;
-      color: var(--accent);
-    }
+        /* --- BIG CENTERED HERO OPTIONS (HOME) --- */
+        .centered-home {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 65vh;
+        }
 
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 0.4rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
 
-    input, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-main);
-      font-size: 1rem;
-    }
+        .big-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+            max-width: 850px;
+        }
 
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
+        .big-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .btn {
-      background: var(--accent);
-      color: #000;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-weight: 700;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-      font-size: 1rem;
-      transition: background 0.2s;
-    }
+        .big-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.15);
+        }
 
-    .btn:hover {
-      background: var(--accent-hover);
-    }
+        .big-card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
+        .big-card h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
 
-    .art-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+        .big-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
 
-    .art-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background: #111;
-    }
+        /* --- FORMS --- */
+        .form-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 16px;
+        }
 
-    .art-card-body {
-      padding: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+        .form-container h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
 
-    .art-card-body h3 {
-      margin-bottom: 0.5rem;
-    }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
 
-    .art-card-body p {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
 
-    .price-tag {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: var(--success);
-      margin: 0.5rem 0 1rem 0;
-    }
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
 
-    .breakdown-box {
-      background: var(--bg-input);
-      border: 1px dashed var(--border);
-      padding: 1rem;
-      border-radius: 8px;
-      margin: 1rem 0;
-      font-size: 0.9rem;
-    }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
 
-    .breakdown-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.4rem;
-    }
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
 
-    .notice {
-      background: rgba(245, 158, 11, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 0.8rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.85rem;
-      color: var(--accent);
-    }
+        .submit-btn:hover { background: var(--accent-hover); }
 
-    footer {
-      background: #12141c;
-      border-top: 1px solid var(--border);
-      padding: 1.5rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
+        /* --- GALLERY --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
 
-    footer span {
-      color: var(--accent);
-      font-weight: 600;
-    }
+        .art-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
 
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      padding: 1rem;
-    }
+        .art-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background: var(--bg-input);
+        }
 
-    .modal.active {
-      display: flex;
-    }
+        .art-info { padding: 1.2rem; }
+        .art-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .art-artist { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.8rem; }
+        .art-price { font-size: 1.4rem; font-weight: 800; color: var(--success); margin-bottom: 1rem; }
 
-    .modal-content {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      max-width: 450px;
-      width: 100%;
-      padding: 2rem;
-      position: relative;
-    }
+        /* --- MODAL (CHECKOUT & VERIFICATION) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-  </style>
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 16px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem; right: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .breakdown-box {
+            background: var(--bg-input);
+            border: 1px dashed var(--border);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.4rem;
+        }
+
+        .notice {
+            background: rgba(255, 165, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--warning);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #050505;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer span { color: var(--text-primary); font-weight: bold; }
+    </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">ArtHunt</div>
-    <nav>
-      <button id="nav-buy" class="active" onclick="showView('buy-view')">Buy Art</button>
-      <button id="nav-sell" onclick="showView('sell-view')">Sell Art</button>
-      <button id="nav-auth" onclick="showView('auth-view')">Sign In</button>
-    </nav>
-  </header>
+    <!-- HEADER -->
+    <header>
+        <div class="logo" onclick="switchView('home')">ART<span>HUNT</span></div>
+        <nav>
+            <button class="nav-btn" onclick="switchView('buy')">Buy Art</button>
+            <button class="nav-btn" onclick="switchView('sell')">Sell Art</button>
+            <button class="nav-btn" id="authBtn" onclick="switchView('signin')">Sign In</button>
+        </nav>
+    </header>
 
-  <div class="container">
-
-    <!-- SIGN IN VIEW -->
-    <section id="auth-view" class="view">
-      <div class="card" style="max-width: 450px; margin: 0 auto;">
-        <h2>Sign In to ArtHunt</h2>
-        <form id="auth-form" onsubmit="handleAuth(event)">
-          <div class="form-group">
-            <label>Phone Number *</label>
-            <input type="tel" id="auth-phone" placeholder="e.g. 9876543210" required />
-          </div>
-          <div class="form-group">
-            <label>Email Address (Optional)</label>
-            <input type="email" id="auth-email" placeholder="you@example.com" />
-          </div>
-          <button type="submit" class="btn">Continue</button>
-        </form>
-      </div>
-    </section>
-
-    <!-- BUY VIEW -->
-    <section id="buy-view" class="view active">
-      <h2>Explore Original Drawings</h2>
-      <p style="color: var(--text-muted); margin-bottom: 1rem;">Direct from independent artists across India.</p>
-      
-      <div id="art-grid" class="grid">
-        <!-- Injected via JavaScript -->
-      </div>
-    </section>
-
-    <!-- SELL VIEW -->
-    <section id="sell-view" class="view">
-      <div class="card" style="max-width: 600px; margin: 0 auto;">
-        <h2>Upload & Sell Your Drawing</h2>
+    <!-- MAIN BODY -->
+    <main>
         
-        <div class="notice">
-          ⚠️ <strong>Seller Requirement:</strong> You are responsible for shipping the physical drawing to the buyer once payment is received. Ensure shipping & any applicable taxes are factored into your total listed price.
-        </div>
+        <!-- 1. HOME VIEW (BIG & CENTERED OPTIONS) -->
+        <section id="homeView" class="view active">
+            <div class="centered-home">
+                <h1 class="hero-title">ARTHUNT</h1>
+                <p class="hero-subtitle">The direct marketplace for original hand-drawn artwork.</p>
 
-        <form id="sell-form" onsubmit="handleUpload(event)">
-          <div class="form-group">
-            <label>Drawing Title *</label>
-            <input type="text" id="art-title" required placeholder="e.g., Charcoal Mountain Landscape" />
-          </div>
+                <div class="big-options-grid">
+                    <div class="big-card" onclick="switchView('buy')">
+                        <div class="big-card-icon">🖼️</div>
+                        <h2>BUY ART</h2>
+                        <p>Explore original drawings available for purchase directly from artists.</p>
+                    </div>
 
-          <div class="form-group">
-            <label>Description *</label>
-            <textarea id="art-desc" rows="3" required placeholder="Dimensions, medium (oil/charcoal), paper type..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Image URL *</label>
-            <input type="url" id="art-img" required placeholder="https://example.com/drawing.jpg" />
-          </div>
-
-          <div class="form-group">
-            <label>Total Price (₹) * (Inclusive of shipping & tax)</label>
-            <input type="number" id="art-price" min="10" required placeholder="1000" oninput="calculatePayout(this.value)" />
-          </div>
-
-          <!-- Live Split Calculation -->
-          <div class="breakdown-box">
-            <div class="breakdown-row">
-              <span>Your Payout (90%):</span>
-              <strong style="color: var(--success);" id="payout-seller">₹0</strong>
+                    <div class="big-card" onclick="switchView('sell')">
+                        <div class="big-card-icon">🎨</div>
+                        <h2>SELL ART</h2>
+                        <p>Upload your drawings, set your price, and start receiving payments.</p>
+                    </div>
+                </div>
             </div>
-            <div class="breakdown-row">
-              <span>Platform Fee (10% to ArtHunt):</span>
-              <strong id="payout-platform">₹0</strong>
+        </section>
+
+        <!-- 2. SIGN IN VIEW -->
+        <section id="signinView" class="view">
+            <div class="form-container">
+                <h2>Sign In</h2>
+                <form onsubmit="handleSignIn(event)">
+                    <div class="form-group">
+                        <label for="phone">Phone Number (Required)</label>
+                        <input type="tel" id="phone" placeholder="+91 9876543210" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address (Optional)</label>
+                        <input type="email" id="email" placeholder="name@example.com">
+                    </div>
+                    <button type="submit" class="submit-btn">Continue</button>
+                </form>
             </div>
-          </div>
+        </section>
 
-          <div class="form-group">
-            <label>Seller Phone Number *</label>
-            <input type="tel" id="seller-phone" required placeholder="e.g. 9876543210" />
-          </div>
+        <!-- 3. BUY ART VIEW -->
+        <section id="buyView" class="view">
+            <h2 style="font-size: 2rem;">Available Drawings</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Select an artwork to initiate manual checkout.</p>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
 
-          <div class="form-group">
-            <label>Seller UPI ID * (For 90% payout transfer)</label>
-            <input type="text" id="seller-upi" required placeholder="e.g. yourname@upi" />
-          </div>
+        <!-- 4. SELL ART VIEW -->
+        <section id="sellView" class="view">
+            <div class="form-container">
+                <h2>List Drawing for Sale</h2>
+                <form onsubmit="handleSellSubmit(event)">
+                    <div class="form-group">
+                        <label for="artTitle">Artwork Title</label>
+                        <input type="text" id="artTitle" placeholder="e.g., Charcoal Portrait" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artPrice">Total Price in ₹ (Include taxes & shipping)</label>
+                        <input type="number" id="artPrice" min="1" placeholder="2000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerPhone">Seller Contact Phone Number</label>
+                        <input type="tel" id="sellerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerUpi">Seller UPI ID (Receives 90%)</label>
+                        <input type="text" id="sellerUpi" placeholder="seller@upi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artImage">Artwork Image Link (URL)</label>
+                        <input type="url" id="artImage" placeholder="https://..." required>
+                    </div>
+                    <button type="submit" class="submit-btn">Post Artwork</button>
+                </form>
+            </div>
+        </section>
 
-          <button type="submit" class="btn">List Drawing for Sale</button>
-        </form>
-      </div>
-    </section>
+    </main>
 
-  </div>
+    <!-- CHECKOUT MODAL (MANUAL CONFIRMATION MODE) -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h3 id="modalArtTitle" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Purchase Drawing</h3>
+            <p id="modalArtistPhone" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;"></p>
+            
+            <div class="breakdown-box">
+                <div class="breakdown-row">
+                    <span>Total Price:</span>
+                    <strong id="breakdownTotal">₹0</strong>
+                </div>
+                <div class="breakdown-row">
+                    <span>Seller Payout (90%):</span>
+                    <span id="breakdownSeller">₹0</span>
+                </div>
+                <div class="breakdown-row">
+                    <span>Platform Fee (10%):</span>
+                    <span id="breakdownPlatform">₹0</span>
+                </div>
+            </div>
 
-  <!-- PAYMENT BREAKDOWN MODAL -->
-  <div id="checkout-modal" class="modal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <h3 style="color: var(--accent); margin-bottom: 1rem;">Complete Purchase</h3>
-      
-      <p id="checkout-title" style="font-weight: bold; margin-bottom: 0.5rem;"></p>
-      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
-        The seller will ship the physical art to your contact address once payment is verified.
-      </p>
+            <div style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.2rem;">
+                <p><strong>Payment Instructions:</strong></p>
+                <p>1. Send 90% to Seller UPI: <strong id="modalSellerUpi" style="color: var(--accent);"></strong></p>
+                <p>2. Send 10% Fee to Platform UPI: <strong style="color: var(--accent);">9986929215@upi</strong></p>
+            </div>
 
-      <div class="breakdown-box">
-        <div class="breakdown-row">
-          <span>Total Amount to Pay:</span>
-          <strong id="modal-total">₹0</strong>
+            <div class="notice">
+                ⏳ <strong>Manual Admin Verification:</strong> Submitting this will mark your payment as <strong>Pending Verification</strong>. The order will NOT be finalized until the admin manually confirms receipt of the 10% fee.
+            </div>
+
+            <button class="submit-btn" onclick="submitManualPayment()">Submit Payment For Verification</button>
         </div>
-        <hr style="border: 0; border-top: 1px solid var(--border); margin: 0.5rem 0;">
-        <div class="breakdown-row">
-          <span>1. Pay 90% to Seller:</span>
-          <strong id="modal-seller-amount">₹0</strong>
-        </div>
-        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem;">
-          UPI: <span id="modal-seller-upi" style="color: var(--accent);"></span>
-        </div>
-
-        <div class="breakdown-row">
-          <span>2. Pay 10% Platform Fee:</span>
-          <strong id="modal-platform-amount">₹0</strong>
-        </div>
-        <div style="font-size: 0.8rem; color: var(--text-muted);">
-          ArtHunt UPI / Mobile: <span style="color: var(--accent);">+91 9986929215</span>
-        </div>
-      </div>
-
-      <button class="btn" onclick="confirmPayment()">I Have Completed Both Payments</button>
     </div>
-  </div>
 
-  <footer>
-    <p>ArtHunt &copy; 2026 | For Support & Inquiries, Contact: <span>6360453498</span></p>
-  </footer>
+    <!-- FOOTER -->
+    <footer>
+        Contact Us: <span>6360453498</span> | ArtHunt © 2026
+    </footer>
 
-  <script>
-    // In-memory artworks list
-    let artList = [
-      {
-        id: 1,
-        title: "Sunset Charcoal Sketch",
-        desc: "A4 textured paper, charcoal blend. Free shipping across India.",
-        price: 1500,
-        img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80",
-        phone: "9876543210",
-        upi: "seller1@okhdfcbank"
-      },
-      {
-        id: 2,
-        title: "Traditional Pen & Ink Mandala",
-        desc: "Hand-drawn detailed ink pattern on 300 GSM watercolor paper.",
-        price: 2500,
-        img: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?auto=format&fit=crop&w=600&q=80",
-        phone: "9845012345",
-        upi: "artist2@upi"
-      }
-    ];
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let currentUser = null;
+        let drawings = []; // Empty array ready for real seller uploads
 
-    let currentUser = null;
+        function switchView(view) {
+            if (view === 'sell' && !currentUser) {
+                alert("Please sign in with your phone number to sell art.");
+                switchView('signin');
+                return;
+            }
 
-    function showView(viewId) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById(viewId).classList.add('active');
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(view + 'View').classList.add('active');
 
-      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-      if (viewId === 'buy-view') document.getElementById('nav-buy').classList.add('active');
-      if (viewId === 'sell-view') document.getElementById('nav-sell').classList.add('active');
-      if (viewId === 'auth-view') document.getElementById('nav-auth').classList.add('active');
+            if (view === 'buy') renderGallery();
+        }
 
-      if (viewId === 'buy-view') renderArt();
-    }
+        function handleSignIn(e) {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            currentUser = { phone };
+            document.getElementById('authBtn').innerText = `Phone: ${phone.slice(-4)}`;
+            document.getElementById('sellerPhone').value = phone;
+            alert('Signed in!');
+            switchView('home');
+        }
 
-    function handleAuth(e) {
-      e.preventDefault();
-      const phone = document.getElementById('auth-phone').value;
-      const email = document.getElementById('auth-email').value;
+        function handleSellSubmit(e) {
+            e.preventDefault();
+            const newArt = {
+                id: Date.now(),
+                title: document.getElementById('artTitle').value,
+                price: parseFloat(document.getElementById('artPrice').value),
+                sellerPhone: document.getElementById('sellerPhone').value,
+                sellerUpi: document.getElementById('sellerUpi').value,
+                image: document.getElementById('artImage').value
+            };
+            drawings.push(newArt);
+            alert('Artwork posted!');
+            switchView('buy');
+        }
 
-      currentUser = { phone, email };
-      alert(`Signed in successfully as ${phone}!`);
-      document.getElementById('nav-auth').innerText = `👤 ${phone}`;
-      showView('buy-view');
-    }
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
 
-    function calculatePayout(amount) {
-      const price = parseFloat(amount) || 0;
-      const sellerShare = (price * 0.90).toFixed(2);
-      const platformShare = (price * 0.10).toFixed(2);
+            if (drawings.length === 0) {
+                grid.innerHTML = `<p style="color: var(--text-secondary); grid-column: 1/-1;">No drawings listed yet. Click <strong>Sell Art</strong> to add the first drawing!</p>`;
+                return;
+            }
 
-      document.getElementById('payout-seller').innerText = `₹${sellerShare}`;
-      document.getElementById('payout-platform').innerText = `₹${platformShare}`;
-    }
+            drawings.forEach(art => {
+                const card = document.createElement('div');
+                card.className = 'art-card';
+                card.innerHTML = `
+                    <img src="${art.image}" alt="${art.title}" onerror="this.src='https://via.placeholder.com/300x200/111111/ffffff?text=Drawing'">
+                    <div class="art-info">
+                        <div class="art-title">${art.title}</div>
+                        <div class="art-artist">Seller: +91 ${art.sellerPhone}</div>
+                        <div class="art-price">₹${art.price}</div>
+                        <button class="submit-btn" onclick="openCheckout(${art.id})">Buy Drawing</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
-    function handleUpload(e) {
-      e.preventDefault();
-      const title = document.getElementById('art-title').value;
-      const desc = document.getElementById('art-desc').value;
-      const img = document.getElementById('art-img').value;
-      const price = parseFloat(document.getElementById('art-price').value);
-      const phone = document.getElementById('seller-phone').value;
-      const upi = document.getElementById('seller-upi').value;
+        let selectedArt = null;
 
-      const newArt = {
-        id: Date.now(),
-        title,
-        desc,
-        img,
-        price,
-        phone,
-        upi
-      };
+        function openCheckout(id) {
+            if (!currentUser) {
+                alert("Please sign in with your phone number to buy.");
+                switchView('signin');
+                return;
+            }
 
-      artList.unshift(newArt);
-      alert('Drawing listed successfully! Buyers will see it in the gallery.');
-      document.getElementById('sell-form').reset();
-      calculatePayout(0);
-      showView('buy-view');
-    }
+            selectedArt = drawings.find(d => d.id === id);
+            if (!selectedArt) return;
 
-    function renderArt() {
-      const grid = document.getElementById('art-grid');
-      grid.innerHTML = '';
+            const platformFee = Math.round(selectedArt.price * 0.10);
+            const sellerPayout = Math.round(selectedArt.price * 0.90);
 
-      artList.forEach(art => {
-        const sellerCut = (art.price * 0.9).toFixed(0);
-        const platformCut = (art.price * 0.1).toFixed(0);
+            document.getElementById('modalArtTitle').innerText = selectedArt.title;
+            document.getElementById('modalArtistPhone').innerText = `Seller Contact: +91 ${selectedArt.sellerPhone}`;
+            document.getElementById('breakdownTotal').innerText = `₹${selectedArt.price}`;
+            document.getElementById('breakdownSeller').innerText = `₹${sellerPayout}`;
+            document.getElementById('breakdownPlatform').innerText = `₹${platformFee}`;
+            document.getElementById('modalSellerUpi').innerText = selectedArt.sellerUpi;
 
-        const card = document.createElement('div');
-        card.className = 'art-card';
-        card.innerHTML = `
-          <img src="${art.img}" alt="${art.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image+Available'" />
-          <div class="art-card-body">
-            <h3>${art.title}</h3>
-            <p>${art.desc}</p>
-            <p><small>Seller UPI: ${art.upi}</small></p>
-            <div class="price-tag">₹${art.price}</div>
-            <button class="btn" onclick="openCheckout(${art.id})" style="margin-top: auto;">Buy Now</button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
+            document.getElementById('paymentModal').classList.add('active');
+        }
 
-    function openCheckout(id) {
-      const art = artList.find(item => item.id === id);
-      if (!art) return;
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
 
-      const sellerCut = (art.price * 0.9).toFixed(2);
-      const platformCut = (art.price * 0.1).toFixed(2);
-
-      document.getElementById('checkout-title').innerText = art.title;
-      document.getElementById('modal-total').innerText = `₹${art.price}`;
-      document.getElementById('modal-seller-amount').innerText = `₹${sellerCut}`;
-      document.getElementById('modal-seller-upi').innerText = art.upi;
-      document.getElementById('modal-platform-amount').innerText = `₹${platformCut}`;
-
-      document.getElementById('checkout-modal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('checkout-modal').classList.remove('active');
-    }
-
-    function confirmPayment() {
-      alert('Payment confirmation submitted! The seller will be notified to ship your drawing.');
-      closeModal();
-    }
-
-    // Initial render
-    renderArt();
-  </script>
+        function submitManualPayment() {
+            alert(`Payment submitted! Your transaction for "${selectedArt.title}" is now PENDING MANUAL CONFIRMATION.\n\nThe admin will verify receipt of the 10% platform fee at 9986929215@upi before confirming and forwarding shipment details.`);
+            closeModal();
+        }
+    </script>
 </body>
 </html>
